@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+import 'package:scan_promo/person.dart';
 
 class HomePage extends StatefulWidget {
   final String email;
@@ -13,11 +14,20 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  List<Person> persons = [
+    Person(title: '20%P', desc: 'desc 1'),
+    Person(title: '20%P', desc: 'desc 2'),
+    Person(title: '20%P', desc: 'desc 3'),
+    Person(title: '20%P', desc: 'desc 1'),
+    Person(title: '20%P', desc: 'desc 2'),
+    Person(title: '20%P', desc: 'desc 3'),
+    Person(title: '20%P', desc: 'desc 1')
+  ];
+  // ignore: unused_field
   String _scanBarcode = 'Unknown';
 
   @override
   void initState() {
-    String _email = widget.email;
     super.initState();
   }
 
@@ -69,26 +79,66 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        home: Scaffold(
-            appBar: AppBar(title: const Text('Barcode scan')),
-            body: Builder(builder: (BuildContext context) {
-              return Container(
-                alignment: Alignment.center,
-                child: Flex(
-                    direction: Axis.vertical,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text('email :' + widget.email),
-                      Text('Scan result : $_scanBarcode\n',
-                          style: TextStyle(fontSize: 20)),
-                      FloatingActionButton(
-                        backgroundColor: Colors.blue,
-                        foregroundColor: Colors.black,
-                        onPressed: () => scanQR(),
-                        child: Icon(Icons.camera_alt),
-                      )
-                    ]),
-              );
-            })));
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Barcode scan'),
+          actions: [
+            FloatingActionButton.extended(
+              backgroundColor: Colors.blue,
+              foregroundColor: Colors.black,
+              onPressed: () => scanQR(),
+              icon: Icon(Icons.camera_alt),
+              label: Text('Scan QR'),
+            ),
+          ],
+        ),
+        body: Builder(
+          builder: (BuildContext context) {
+            return SingleChildScrollView(
+              child: Column(
+                children: [
+                  Text(widget.email),
+                  Column(
+                      children: persons.map((p) {
+                    return personDetailCard(p);
+                  }).toList()),
+                ],
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+
+  // ignore: non_constant_identifier_names
+  Widget personDetailCard(Person) {
+    return Padding(
+      padding: const EdgeInsets.all(10.0),
+      child: Card(
+        color: Colors.grey[800],
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Row(
+            children: <Widget>[
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: <Widget>[
+                  Text(
+                    Person.title,
+                    style: TextStyle(color: Colors.white, fontSize: 18),
+                  ),
+                  Text(
+                    Person.desc,
+                    style: TextStyle(color: Colors.white, fontSize: 12),
+                  )
+                ],
+              )
+            ],
+          ),
+        ),
+      ),
+    );
   }
 }

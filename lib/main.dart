@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:scan_promo/home.dart';
 //import 'package:scan_promo/home.dart';
 
@@ -10,7 +11,9 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays([]);
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: _title,
       home: Scaffold(
         appBar: AppBar(title: const Text(_title)),
@@ -47,6 +50,9 @@ class _MyEmailInputState extends State<MyEmailInput> {
             validator: (value) {
               if (value!.isEmpty) {
                 return 'Please enter some text';
+              }
+              if (value.contains('@') == false) {
+                return 'Please input a email';
               }
               return null;
             },
