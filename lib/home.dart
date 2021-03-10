@@ -4,6 +4,10 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class HomePage extends StatefulWidget {
+  final String email;
+
+  const HomePage({Key? key, required this.email}) : super(key: key);
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -13,6 +17,7 @@ class _HomePageState extends State<HomePage> {
 
   @override
   void initState() {
+    String _email = widget.email;
     super.initState();
   }
 
@@ -73,6 +78,7 @@ class _HomePageState extends State<HomePage> {
                     direction: Axis.vertical,
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
+                      Text('email :' + widget.email),
                       Text('Scan result : $_scanBarcode\n',
                           style: TextStyle(fontSize: 20)),
                       FloatingActionButton(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:scan_promo/home.dart';
 //import 'package:scan_promo/home.dart';
 
 void main() => runApp(MyApp());
@@ -13,7 +14,9 @@ class MyApp extends StatelessWidget {
       title: _title,
       home: Scaffold(
         appBar: AppBar(title: const Text(_title)),
-        body: MyEmailInput(),
+        body: Center(
+          child: MyEmailInput(),
+        ),
       ),
     );
   }
@@ -27,6 +30,7 @@ class MyEmailInput extends StatefulWidget {
 }
 
 class _MyEmailInputState extends State<MyEmailInput> {
+  final myController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -46,6 +50,7 @@ class _MyEmailInputState extends State<MyEmailInput> {
               }
               return null;
             },
+            controller: myController,
           ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0),
@@ -54,7 +59,11 @@ class _MyEmailInputState extends State<MyEmailInput> {
                 // Validate will return true if the form is valid, or false if
                 // the form is invalid.
                 if (_formKey.currentState!.validate()) {
-                  // Process data.
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) =>
+                              HomePage(email: myController.text)));
                 }
               },
               child: Text('Submit'),
