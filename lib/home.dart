@@ -1,8 +1,44 @@
 import 'dart:async';
+import 'dart:convert';
+import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import 'package:scan_promo/person.dart';
+import 'package:scan_promo/card.dart';
+
+Future<Ids> fetchIds(email, type) async {
+  var queryParameters = {
+    'type': type,
+    'email': email,
+  };
+  String url = 'tartapain.bzh';
+  var uri = Uri.https(url, '/api/scan/get.php', queryParameters);
+  final response = await http.get(uri);
+
+  if (response.statusCode == 200) {
+    return Ids.fromJson(json.decode(response.body));
+  } else {
+    throw Exception('Failed to load the post');
+  }
+}
+
+class Ids {
+  final List<dynamic> ids;
+  final String lenght;
+
+  Ids({
+    required this.ids,
+    required this.lenght,
+  });
+
+  factory Ids.fromJson(Map<String, dynamic> json) {
+    return Ids(
+      ids: json['ids'],
+      lenght: json['lenght'],
+    );
+  }
+}
 
 class HomePage extends StatefulWidget {
   final String email;
@@ -14,6 +50,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Future<Ids> futureIds;
   List<Person> persons = [
     Person(title: '20%P', desc: 'desc 1'),
     Person(title: '20%P', desc: 'desc 2'),
@@ -29,6 +66,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    futureIds = fetchIds(widget.email, 'get_scan_user');
   }
 
   Future<void> startBarcodeScanStream() async {
@@ -93,19 +131,38 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-        body: Builder(
-          builder: (BuildContext context) {
-            return SingleChildScrollView(
-              child: Column(
-                children: [
-                  Text(widget.email),
-                  Column(
-                      children: persons.map((p) {
-                    return personDetailCard(p);
-                  }).toList()),
-                ],
-              ),
-            );
+        body: FutureBuilder(
+          initialData: [],
+          future: futureIds,
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: Text("Loading..."));
+            }
+            if (snapshot.hasData) {
+              return SingleChildScrollView(
+                child: Column(
+                  children: [
+                    Text(widget.email),
+                    Column(
+                      children: [
+                        for (var i = 0;
+                            i < int.parse(snapshot.data.lenght);
+                            i++)
+                          {
+                            //Text(i.toString()),
+                            personDetailCard(snapshot.data.ids[i]),
+                          }
+                      ],
+                    ),
+                  ],
+                ),
+              );
+            } else if (snapshot.hasError) {
+              return Text('${snapshot.error}');
+            } else {
+              return CircularProgressIndicator(
+                  valueColor: new AlwaysStoppedAnimation<Color>(Colors.black));
+            }
           },
         ),
       ),
@@ -113,32 +170,5 @@ class _HomePageState extends State<HomePage> {
   }
 
   // ignore: non_constant_identifier_names
-  Widget personDetailCard(Person) {
-    return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Card(
-        color: Colors.grey[800],
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Row(
-            children: <Widget>[
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Text(
-                    Person.title,
-                    style: TextStyle(color: Colors.white, fontSize: 18),
-                  ),
-                  Text(
-                    Person.desc,
-                    style: TextStyle(color: Colors.white, fontSize: 12),
-                  )
-                ],
-              )
-            ],
-          ),
-        ),
-      ),
-    );
-  }
+
 }
