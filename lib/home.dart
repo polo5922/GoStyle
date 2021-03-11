@@ -4,8 +4,9 @@ import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import 'package:scan_promo/person.dart';
 import 'package:scan_promo/card.dart';
+import 'package:scan_promo/qr_result.dart';
+import 'package:scan_promo/main.dart';
 
 Future<Ids> fetchIds(email, type) async {
   var queryParameters = {
@@ -53,15 +54,6 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   Future<Ids> futureIds;
-  List<Person> persons = [
-    Person(title: '20%P', desc: 'desc 1'),
-    Person(title: '20%P', desc: 'desc 2'),
-    Person(title: '20%P', desc: 'desc 3'),
-    Person(title: '20%P', desc: 'desc 1'),
-    Person(title: '20%P', desc: 'desc 2'),
-    Person(title: '20%P', desc: 'desc 3'),
-    Person(title: '20%P', desc: 'desc 1')
-  ];
   // ignore: unused_field
   String _scanBarcode = 'Unknown';
 
@@ -92,6 +84,13 @@ class _HomePageState extends State<HomePage> {
 
     setState(() {
       _scanBarcode = barcodeScanRes;
+      Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => QrResult(
+                    email: widget.email,
+                    qrValue: _scanBarcode,
+                  )));
     });
   }
 
@@ -123,6 +122,12 @@ class _HomePageState extends State<HomePage> {
       home: Scaffold(
         appBar: AppBar(
           title: const Text('Barcode scan'),
+          leading: IconButton(
+              icon: Icon(Icons.home),
+              onPressed: () {
+                Navigator.push(
+                    context, MaterialPageRoute(builder: (context) => Email()));
+              }),
           actions: [
             FloatingActionButton.extended(
               backgroundColor: Colors.blue,
