@@ -67,22 +67,40 @@ class _MyEmailInputState extends State<MyEmailInput> {
             ),
           ),
           Center(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 16.0),
-              child: ElevatedButton(
-                onPressed: () {
-                  // Validate will return true if the form is valid, or false if
-                  // the form is invalid.
-                  if (_formKey.currentState.validate()) {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) =>
-                                HomePage(email: myController.text)));
-                  }
-                },
-                child: Text('Valider'),
-              ),
+            child: Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  child: ElevatedButton(
+                    onPressed: () {
+                      // Validate will return true if the form is valid, or false if
+                      // the form is invalid.
+                      if (_formKey.currentState.validate()) {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>
+                                    HomePage(email: myController.text)));
+                      }
+                    },
+                    child: Text('Valider'),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    // Validate will return true if the form is valid, or false if
+                    // the form is invalid.
+                    if (_formKey.currentState.validate()) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  HomePage(email: myController.text)));
+                    }
+                  },
+                  child: Text('S\'inscrire'),
+                ),
+              ],
             ),
           ),
         ],
