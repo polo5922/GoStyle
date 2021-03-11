@@ -13,9 +13,7 @@ Future<Data> fetchData(id, type) async {
   final response = await http.get(uri);
 
   if (response.statusCode == 200) {
-    if (response.body != null) {
-      return Data.fromJson(json.decode(response.body));
-    }
+    return Data.fromJson(json.decode(response.body));
   } else {
     throw Exception('Failed to load the post');
   }

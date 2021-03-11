@@ -18,9 +18,7 @@ Future<Ids> fetchIds(email, type) async {
   final response = await http.get(uri);
 
   if (response.statusCode == 200) {
-    if (response.body != null) {
-      return Ids.fromJson(json.decode(response.body));
-    }
+    return Ids.fromJson(json.decode(response.body));
   } else {
     throw Exception('Failed to load the post');
   }
