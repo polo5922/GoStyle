@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyEmailInput extends StatefulWidget {
-  MyEmailInput({Key? key}) : super(key: key);
+  MyEmailInput({Key key}) : super(key: key);
 
   @override
   _MyEmailInputState createState() => _MyEmailInputState();
@@ -48,7 +48,7 @@ class _MyEmailInputState extends State<MyEmailInput> {
               hintText: 'Enter your email',
             ),
             validator: (value) {
-              if (value!.isEmpty) {
+              if (value.isEmpty) {
                 return 'Please enter some text';
               }
               if (value.contains('@') == false) {
@@ -64,7 +64,7 @@ class _MyEmailInputState extends State<MyEmailInput> {
               onPressed: () {
                 // Validate will return true if the form is valid, or false if
                 // the form is invalid.
-                if (_formKey.currentState!.validate()) {
+                if (_formKey.currentState.validate()) {
                   Navigator.push(
                       context,
                       MaterialPageRoute(

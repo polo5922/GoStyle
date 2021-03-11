@@ -17,7 +17,9 @@ Future<Ids> fetchIds(email, type) async {
   final response = await http.get(uri);
 
   if (response.statusCode == 200) {
-    return Ids.fromJson(json.decode(response.body));
+    if (response.body != null) {
+      return Ids.fromJson(json.decode(response.body));
+    }
   } else {
     throw Exception('Failed to load the post');
   }
@@ -25,11 +27,11 @@ Future<Ids> fetchIds(email, type) async {
 
 class Ids {
   final List<dynamic> ids;
-  final String lenght;
+  final int lenght;
 
   Ids({
-    required this.ids,
-    required this.lenght,
+    this.ids,
+    this.lenght,
   });
 
   factory Ids.fromJson(Map<String, dynamic> json) {
@@ -43,7 +45,7 @@ class Ids {
 class HomePage extends StatefulWidget {
   final String email;
 
-  const HomePage({Key? key, required this.email}) : super(key: key);
+  const HomePage({Key key, this.email}) : super(key: key);
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -71,7 +73,7 @@ class _HomePageState extends State<HomePage> {
 
   Future<void> startBarcodeScanStream() async {
     FlutterBarcodeScanner.getBarcodeStreamReceiver(
-            '#ff6666', 'Cancel', true, ScanMode.BARCODE)!
+            '#ff6666', 'Cancel', true, ScanMode.BARCODE)
         .listen((barcode) => print(barcode));
   }
 
@@ -143,17 +145,10 @@ class _HomePageState extends State<HomePage> {
                 child: Column(
                   children: [
                     Text(widget.email),
-                    Column(
-                      children: [
-                        for (var i = 0;
-                            i < int.parse(snapshot.data.lenght);
-                            i++)
-                          {
-                            //Text(i.toString()),
-                            personDetailCard(snapshot.data.ids[i]),
-                          }
-                      ],
-                    ),
+                    for (var i = 0; i < snapshot.data.lenght; i++)
+                      CardDisplay(
+                        id: snapshot.data.ids[i],
+                      ),
                   ],
                 ),
               );
