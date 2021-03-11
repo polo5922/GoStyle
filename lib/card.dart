@@ -65,13 +65,6 @@ class _CardDisplay extends State<CardDisplay> {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: <Widget>[
-              Text(
-                widget.id.toString() + " : ",
-                style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold),
-              ),
               FutureBuilder(
                   future: futureData,
                   initialData: [],

@@ -23,8 +23,17 @@ environment:
 dependencies:
   http: ^0.13.0
   flutter_barcode_scanner: ^1.0.2
+  flutter_launcher_icons: ^0.9.0
   flutter:
     sdk: flutter
+
+flutter_icons:
+  ios: true
+  android: true
+  image_path_ios: "assets/background.png"
+  image_path_android: "assets/background.png"
+  adaptive_icon_background: "assets/background.png"
+  adaptive_icon_foreground: "assets/foreground.png"
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
