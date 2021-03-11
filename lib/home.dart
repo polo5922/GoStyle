@@ -121,7 +121,7 @@ class _HomePageState extends State<HomePage> {
         appBar: AppBar(
           title: const Text('Barcode scan'),
           leading: IconButton(
-              icon: Icon(Icons.home),
+              icon: Icon(Icons.logout),
               onPressed: () {
                 Navigator.push(
                     context, MaterialPageRoute(builder: (context) => Email()));
@@ -129,10 +129,10 @@ class _HomePageState extends State<HomePage> {
           actions: [
             FloatingActionButton.extended(
               backgroundColor: Colors.blue,
-              foregroundColor: Colors.black,
+              foregroundColor: Colors.white,
               onPressed: () => scanQR(),
               icon: Icon(Icons.camera_alt),
-              label: Text('Scan QR'),
+              label: Text('QR'),
             ),
           ],
         ),
@@ -144,17 +144,40 @@ class _HomePageState extends State<HomePage> {
               return Center(child: Text("Loading..."));
             }
             if (snapshot.hasData) {
-              return SingleChildScrollView(
-                child: Column(
-                  children: [
-                    Text(widget.email),
-                    for (var i = 0; i < snapshot.data.lenght; i++)
-                      CardDisplay(
-                        id: snapshot.data.ids[i],
+              if (snapshot.data.lenght == 0) {
+                return Center(
+                  child: Container(
+                    width: 200,
+                    height: 50,
+                    decoration: new BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: new BorderRadius.all(
+                        Radius.circular(20.0),
                       ),
-                  ],
-                ),
-              );
+                    ),
+                    child: Center(
+                      child: Text(
+                        "Pas de QR Code scanné",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold,
+                            fontSize: 14),
+                      ),
+                    ),
+                  ),
+                );
+              } else {
+                return SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      for (var i = 0; i < snapshot.data.lenght; i++)
+                        CardDisplay(
+                          id: snapshot.data.ids[i],
+                        ),
+                    ],
+                  ),
+                );
+              }
             } else if (snapshot.hasError) {
               return Text('${snapshot.error}');
             } else {

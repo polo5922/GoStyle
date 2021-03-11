@@ -70,18 +70,22 @@ class _CardDisplay extends State<CardDisplay> {
                   initialData: [],
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.waiting) {
-                      return Center(child: Text("Loading..."));
+                      return Center(
+                          child: Text(
+                        "Chargement ...",
+                        style: TextStyle(color: Colors.white),
+                      ));
                     }
                     if (snapshot.hasData) {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Text(
-                            snapshot.data.title,
+                            "Code : " + snapshot.data.title,
                             style: TextStyle(color: Colors.white, fontSize: 18),
                           ),
                           Text(
-                            snapshot.data.desc,
+                            "Description : " + snapshot.data.desc,
                             style: TextStyle(color: Colors.white, fontSize: 12),
                           )
                         ],

@@ -20,7 +20,7 @@ class Email extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
-        appBar: AppBar(title: const Text("email choice")),
+        appBar: AppBar(title: const Text("Gostyle - login")),
         body: Center(
           child: MyEmailInput(),
         ),
@@ -47,36 +47,42 @@ class _MyEmailInputState extends State<MyEmailInput> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          TextFormField(
-            decoration: const InputDecoration(
-              hintText: 'Enter your email',
-            ),
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Please enter some text';
-              }
-              if (value.contains('@') == false) {
-                return 'Please input a email';
-              }
-              return null;
-            },
-            controller: myController,
-          ),
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: ElevatedButton(
-              onPressed: () {
-                // Validate will return true if the form is valid, or false if
-                // the form is invalid.
-                if (_formKey.currentState.validate()) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) =>
-                              HomePage(email: myController.text)));
+            padding: const EdgeInsets.only(
+                left: 8.0, right: 8.0, top: 150.0, bottom: 60.0),
+            child: TextFormField(
+              decoration: const InputDecoration(
+                hintText: 'Entrer votre email',
+              ),
+              validator: (value) {
+                if (value.isEmpty) {
+                  return 'Ne pas rentrer de valeur vide';
                 }
+                if (value.contains('@') == false) {
+                  return 'Metre un email valide';
+                }
+                return null;
               },
-              child: Text('Submit'),
+              controller: myController,
+            ),
+          ),
+          Center(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(vertical: 16.0),
+              child: ElevatedButton(
+                onPressed: () {
+                  // Validate will return true if the form is valid, or false if
+                  // the form is invalid.
+                  if (_formKey.currentState.validate()) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) =>
+                                HomePage(email: myController.text)));
+                  }
+                },
+                child: Text('Valider'),
+              ),
             ),
           ),
         ],
