@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:scan_promo/delete.dart';
 
 Future<Data> fetchData(id, type) async {
   var queryParameters = {
@@ -39,8 +40,9 @@ class Data {
 
 class CardDisplay extends StatefulWidget {
   final int id;
+  final String email;
 
-  const CardDisplay({Key key, this.id}) : super(key: key);
+  const CardDisplay({Key key, this.id, this.email}) : super(key: key);
 
   @override
   _CardDisplay createState() => _CardDisplay();
@@ -77,17 +79,47 @@ class _CardDisplay extends State<CardDisplay> {
                       ));
                     }
                     if (snapshot.hasData) {
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            "Code : " + snapshot.data.title,
-                            style: TextStyle(color: Colors.white, fontSize: 18),
+                      return Row(
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: <Widget>[
+                              Text(
+                                "Code : " + snapshot.data.title,
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 18),
+                              ),
+                              Text(
+                                "Description : " + snapshot.data.desc,
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 12),
+                              )
+                            ],
                           ),
-                          Text(
-                            "Description : " + snapshot.data.desc,
-                            style: TextStyle(color: Colors.white, fontSize: 12),
-                          )
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Container(
+                              width: 30,
+                              height: 30,
+                              child: FloatingActionButton(
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => Remove(
+                                        email: widget.email,
+                                        id: widget.id,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                mini: true,
+                                backgroundColor: Colors.white,
+                                foregroundColor: Colors.red,
+                                child: Icon(Icons.remove),
+                              ),
+                            ),
+                          ),
                         ],
                       );
                     } else if (snapshot.hasError) {

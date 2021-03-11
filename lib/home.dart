@@ -173,6 +173,7 @@ class _HomePageState extends State<HomePage> {
                       for (var i = 0; i < snapshot.data.lenght; i++)
                         CardDisplay(
                           id: snapshot.data.ids[i],
+                          email: widget.email,
                         ),
                     ],
                   ),

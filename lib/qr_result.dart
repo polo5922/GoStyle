@@ -48,8 +48,10 @@ class _QrResult extends State<QrResult> {
             leading: IconButton(
                 icon: Icon(Icons.arrow_back),
                 onPressed: () {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => HomePage()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => HomePage(email: widget.email)));
                 }),
           ),
           body: Center(
@@ -70,7 +72,7 @@ class _QrResult extends State<QrResult> {
                               width: 250,
                               height: 50,
                               decoration: new BoxDecoration(
-                                color: Colors.blue,
+                                color: Colors.green,
                                 borderRadius: new BorderRadius.all(
                                   Radius.circular(20.0),
                                 ),
