@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:scan_promo/delete.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 Future<Data> fetchData(id, type) async {
   var queryParameters = {
@@ -62,7 +63,7 @@ class _CardDisplay extends State<CardDisplay> {
     return Padding(
       padding: const EdgeInsets.all(10.0),
       child: Card(
-        color: Colors.grey[800],
+        color: Colors.blue,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
@@ -79,48 +80,46 @@ class _CardDisplay extends State<CardDisplay> {
                       ));
                     }
                     if (snapshot.hasData) {
-                      return Row(
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text(
-                                "Code : " + snapshot.data.title,
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 18),
+                      return Slidable(
+                        actionPane: SlidableScrollActionPane(),
+                        actions: <Widget>[
+                          IconSlideAction(
+                            caption: 'Remove',
+                            color: Colors.red,
+                            icon: Icons.remove_circle_outline,
+                            onTap: () => {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => Remove(
+                                    email: widget.email,
+                                    id: widget.id,
+                                  ),
+                                ),
                               ),
-                              Text(
-                                "Description : " + snapshot.data.desc,
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 12),
-                              )
-                            ],
-                          ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: Container(
-                              width: 30,
-                              height: 30,
-                              child: FloatingActionButton(
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => Remove(
-                                        email: widget.email,
-                                        id: widget.id,
-                                      ),
-                                    ),
-                                  );
-                                },
-                                mini: true,
-                                backgroundColor: Colors.white,
-                                foregroundColor: Colors.red,
-                                child: Icon(Icons.remove),
-                              ),
-                            ),
+                            },
                           ),
                         ],
+                        actionExtentRatio: 1 / 5,
+                        child: Row(
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text(
+                                  "Code : " + snapshot.data.title,
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 18),
+                                ),
+                                Text(
+                                  "Description : " + snapshot.data.desc,
+                                  style: TextStyle(
+                                      color: Colors.white, fontSize: 12),
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
                       );
                     } else if (snapshot.hasError) {
                       return Text(

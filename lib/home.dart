@@ -136,56 +136,85 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
         ),
-        body: FutureBuilder(
-          initialData: [],
-          future: futureIds,
-          builder: (context, snapshot) {
-            if (snapshot.connectionState == ConnectionState.waiting) {
-              return Center(child: Text("Loading..."));
-            }
-            if (snapshot.hasData) {
-              if (snapshot.data.lenght == 0) {
-                return Center(
-                  child: Container(
-                    width: 200,
-                    height: 50,
-                    decoration: new BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: new BorderRadius.all(
-                        Radius.circular(20.0),
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        "Pas de QR Code scanné",
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14),
-                      ),
+        body: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(top: 15.0),
+              child: Center(
+                child: Container(
+                  width: 250,
+                  height: 50,
+                  decoration: new BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: new BorderRadius.all(
+                      Radius.circular(20.0),
                     ),
                   ),
-                );
-              } else {
-                return SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      for (var i = 0; i < snapshot.data.lenght; i++)
-                        CardDisplay(
-                          id: snapshot.data.ids[i],
-                          email: widget.email,
+                  child: Center(
+                    child: Text(
+                      "Glisser vers la droite pour supprimer",
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            FutureBuilder(
+              initialData: [],
+              future: futureIds,
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return Center(child: Text("Loading..."));
+                }
+                if (snapshot.hasData) {
+                  if (snapshot.data.lenght == 0) {
+                    return Center(
+                      child: Container(
+                        width: 200,
+                        height: 50,
+                        decoration: new BoxDecoration(
+                          color: Colors.blue,
+                          borderRadius: new BorderRadius.all(
+                            Radius.circular(20.0),
+                          ),
                         ),
-                    ],
-                  ),
-                );
-              }
-            } else if (snapshot.hasError) {
-              return Text('${snapshot.error}');
-            } else {
-              return CircularProgressIndicator(
-                  valueColor: new AlwaysStoppedAnimation<Color>(Colors.black));
-            }
-          },
+                        child: Center(
+                          child: Text(
+                            "Pas de QR Code scanné",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14),
+                          ),
+                        ),
+                      ),
+                    );
+                  } else {
+                    return SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          for (var i = 0; i < snapshot.data.lenght; i++)
+                            CardDisplay(
+                              id: snapshot.data.ids[i],
+                              email: widget.email,
+                            ),
+                        ],
+                      ),
+                    );
+                  }
+                } else if (snapshot.hasError) {
+                  return Text('${snapshot.error}');
+                } else {
+                  return CircularProgressIndicator(
+                      valueColor:
+                          new AlwaysStoppedAnimation<Color>(Colors.black));
+                }
+              },
+            ),
+          ],
         ),
       ),
     );

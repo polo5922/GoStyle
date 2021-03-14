@@ -21,23 +21,23 @@ Future<String> fetchData(email, type, password) async {
   }
 }
 
-class Register extends StatefulWidget {
+class Login extends StatefulWidget {
   final String email;
   final String password;
 
-  const Register({Key key, this.email, this.password}) : super(key: key);
+  const Login({Key key, this.email, this.password}) : super(key: key);
 
   @override
-  _Register createState() => _Register();
+  _Login createState() => _Login();
 }
 
-class _Register extends State<Register> {
+class _Login extends State<Login> {
   Future<String> futureData;
 
   @override
   void initState() {
     super.initState();
-    futureData = fetchData(widget.email, 'register', widget.password);
+    futureData = fetchData(widget.email, 'login', widget.password);
   }
 
   @override
@@ -46,7 +46,7 @@ class _Register extends State<Register> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Register'),
+          title: Text('Login'),
         ),
         body: Center(
           child: Column(
@@ -58,7 +58,7 @@ class _Register extends State<Register> {
                     return Center(child: Text("Loading..."));
                   }
                   if (snapshot.hasData) {
-                    if (snapshot.data == 'good:register')
+                    if (snapshot.data == 'good:login')
                       return Column(
                         children: [
                           Padding(
@@ -102,7 +102,7 @@ class _Register extends State<Register> {
                           ),
                         ],
                       );
-                    if (snapshot.data == 'bad:register')
+                    if (snapshot.data == 'bad:login')
                       return Column(
                         children: [
                           Padding(
@@ -121,48 +121,6 @@ class _Register extends State<Register> {
                                 child: Center(
                                   child: Text(
                                     "Connection worse",
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.bold,
-                                        fontSize: 14),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ),
-                          FloatingActionButton.extended(
-                            backgroundColor: Colors.blue,
-                            foregroundColor: Colors.white,
-                            onPressed: () => {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => Email()))
-                            },
-                            icon: Icon(Icons.arrow_back),
-                            label: Text('Page de connextion'),
-                          ),
-                        ],
-                      );
-                    if (snapshot.data == 'bad:register:email_used')
-                      return Column(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                top: 200.0, bottom: 200.0),
-                            child: Center(
-                              child: Container(
-                                width: 280,
-                                height: 50,
-                                decoration: new BoxDecoration(
-                                  color: Colors.red,
-                                  borderRadius: new BorderRadius.all(
-                                    Radius.circular(20.0),
-                                  ),
-                                ),
-                                child: Center(
-                                  child: Text(
-                                    "Email déjà utilisée",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,

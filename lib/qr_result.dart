@@ -1,8 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:scan_promo/home.dart';
 import 'package:http/http.dart' as http;
 
-Future<String> fetchData(qrResult, type, email) async {
+Future<Data> fetchData(qrResult, type, email) async {
   var queryParameters = {
     'qr_value': qrResult,
     'type': type,
@@ -13,9 +15,26 @@ Future<String> fetchData(qrResult, type, email) async {
   final response = await http.get(uri);
 
   if (response.statusCode == 200) {
-    return response.body;
+    return Data.fromJson(json.decode(response.body));
   } else {
     throw Exception('Failed to load the post');
+  }
+}
+
+class Data {
+  final String title;
+  final String color;
+
+  Data({
+    this.title,
+    this.color,
+  });
+
+  factory Data.fromJson(Map<String, dynamic> json) {
+    return Data(
+      color: json['color'],
+      title: json['title'],
+    );
   }
 }
 
@@ -30,7 +49,7 @@ class QrResult extends StatefulWidget {
 }
 
 class _QrResult extends State<QrResult> {
-  Future<String> futureData;
+  Future<Data> futureData;
 
   @override
   void initState() {
@@ -64,31 +83,58 @@ class _QrResult extends State<QrResult> {
                         return Center(child: Text("Loading..."));
                       }
                       if (snapshot.hasData) {
-                        return Padding(
-                          padding:
-                              const EdgeInsets.only(top: 200.0, bottom: 200.0),
-                          child: Center(
-                            child: Container(
-                              width: 250,
-                              height: 50,
-                              decoration: new BoxDecoration(
-                                color: Colors.green,
-                                borderRadius: new BorderRadius.all(
-                                  Radius.circular(20.0),
+                        if (snapshot.data.color == "red")
+                          return Padding(
+                            padding: const EdgeInsets.only(
+                                top: 200.0, bottom: 200.0),
+                            child: Center(
+                              child: Container(
+                                width: 250,
+                                height: 50,
+                                decoration: new BoxDecoration(
+                                  color: Colors.red,
+                                  borderRadius: new BorderRadius.all(
+                                    Radius.circular(20.0),
+                                  ),
                                 ),
-                              ),
-                              child: Center(
-                                child: Text(
-                                  snapshot.data,
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14),
+                                child: Center(
+                                  child: Text(
+                                    snapshot.data.title,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                        );
+                          );
+                        if (snapshot.data.color == "green")
+                          return Padding(
+                            padding: const EdgeInsets.only(
+                                top: 200.0, bottom: 200.0),
+                            child: Center(
+                              child: Container(
+                                width: 250,
+                                height: 50,
+                                decoration: new BoxDecoration(
+                                  color: Colors.green,
+                                  borderRadius: new BorderRadius.all(
+                                    Radius.circular(20.0),
+                                  ),
+                                ),
+                                child: Center(
+                                  child: Text(
+                                    snapshot.data.title,
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 14),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          );
                       } else if (snapshot.hasError) {
                         return Text(
                           '${snapshot.error}',
