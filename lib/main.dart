@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:scan_promo/home.dart';
 import 'package:scan_promo/login.dart';
 import 'package:scan_promo/register.dart';
 //import 'package:scan_promo/home.dart';

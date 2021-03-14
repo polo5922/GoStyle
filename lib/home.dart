@@ -171,23 +171,26 @@ class _HomePageState extends State<HomePage> {
                 }
                 if (snapshot.hasData) {
                   if (snapshot.data.lenght == 0) {
-                    return Center(
-                      child: Container(
-                        width: 200,
-                        height: 50,
-                        decoration: new BoxDecoration(
-                          color: Colors.blue,
-                          borderRadius: new BorderRadius.all(
-                            Radius.circular(20.0),
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Center(
+                        child: Container(
+                          width: 200,
+                          height: 50,
+                          decoration: new BoxDecoration(
+                            color: Colors.blue,
+                            borderRadius: new BorderRadius.all(
+                              Radius.circular(20.0),
+                            ),
                           ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            "Pas de QR Code scanné",
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 14),
+                          child: Center(
+                            child: Text(
+                              "Pas de QR Code scanné",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 14),
+                            ),
                           ),
                         ),
                       ),
