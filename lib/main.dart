@@ -110,7 +110,7 @@ class _MyEmailInputState extends State<MyEmailInput> {
                             );
                           }
                         },
-                        child: Text('Valider'),
+                        child: Text('Connexion'),
                       ),
                     ),
                   ),
