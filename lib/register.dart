@@ -76,7 +76,7 @@ class _Register extends State<Register> {
                                 ),
                                 child: Center(
                                   child: Text(
-                                    "Connection good",
+                                    "Vous êtes inscrit",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
@@ -120,7 +120,7 @@ class _Register extends State<Register> {
                                 ),
                                 child: Center(
                                   child: Text(
-                                    "Connection worse",
+                                    "Inscription invalide",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
@@ -140,7 +140,7 @@ class _Register extends State<Register> {
                                       builder: (context) => Email()))
                             },
                             icon: Icon(Icons.arrow_back),
-                            label: Text('Page de connextion'),
+                            label: Text('Page d\'inscription'),
                           ),
                         ],
                       );
@@ -162,7 +162,7 @@ class _Register extends State<Register> {
                                 ),
                                 child: Center(
                                   child: Text(
-                                    "Email déjà utilisée",
+                                    "Email déjà utilisé",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
@@ -182,7 +182,7 @@ class _Register extends State<Register> {
                                       builder: (context) => Email()))
                             },
                             icon: Icon(Icons.arrow_back),
-                            label: Text('Page de connextion'),
+                            label: Text('Page de connexion'),
                           ),
                         ],
                       );

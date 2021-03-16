@@ -97,14 +97,14 @@
 ``` dart
 TextFormField(
                 decoration: const InputDecoration(
-                  hintText: 'Entrer votre email',
+                  hintText: 'Entrez votre email',
                 ),
                 validator: (value) { //mon validator me permet de rendre le champs valide si jamais il est vide ou alors il ne contient pas de "@" je retourne false
                   if (value.isEmpty) {
                     return 'Ne pas rentrer de valeur vide';
                   }
                   if (value.contains('@') == false) {
-                    return 'Metre un email valide';
+                    return 'Entrez un email valide';
                   }
                   return null;
                 },

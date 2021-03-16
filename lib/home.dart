@@ -119,7 +119,7 @@ class _HomePageState extends State<HomePage> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Barcode scan'),
+          title: const Text('QR codes scannés'),
           leading: IconButton(
               icon: Icon(Icons.logout),
               onPressed: () {
@@ -152,7 +152,7 @@ class _HomePageState extends State<HomePage> {
                   ),
                   child: Center(
                     child: Text(
-                      "Glisser vers la droite pour supprimer",
+                      "Glissez vers la droite pour supprimer",
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.bold,
@@ -167,7 +167,7 @@ class _HomePageState extends State<HomePage> {
               future: futureIds,
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: Text("Loading..."));
+                  return Center(child: Text("Chargement..."));
                 }
                 if (snapshot.hasData) {
                   if (snapshot.data.lenght == 0) {
@@ -185,7 +185,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                           child: Center(
                             child: Text(
-                              "Pas de QR Code scanné",
+                              "Pas de QR code scanné",
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.bold,

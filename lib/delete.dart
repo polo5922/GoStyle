@@ -44,7 +44,7 @@ class _Remove extends State<Remove> {
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Supression du scan'),
+          title: Text('Suppression du scan'),
           leading: IconButton(
               icon: Icon(Icons.arrow_back),
               onPressed: () {

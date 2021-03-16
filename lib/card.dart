@@ -84,7 +84,7 @@ class _CardDisplay extends State<CardDisplay> {
                         actionPane: SlidableScrollActionPane(),
                         actions: <Widget>[
                           IconSlideAction(
-                            caption: 'Remove',
+                            caption: 'Supprimer',
                             color: Colors.red,
                             icon: Icons.remove_circle_outline,
                             onTap: () => {

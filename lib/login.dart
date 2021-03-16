@@ -76,7 +76,7 @@ class _Login extends State<Login> {
                                 ),
                                 child: Center(
                                   child: Text(
-                                    "Connection good",
+                                    "Vous êtes connecté",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
@@ -120,7 +120,7 @@ class _Login extends State<Login> {
                                 ),
                                 child: Center(
                                   child: Text(
-                                    "Connection worse",
+                                    "Compte invalide",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontWeight: FontWeight.bold,
@@ -140,7 +140,7 @@ class _Login extends State<Login> {
                                       builder: (context) => Email()))
                             },
                             icon: Icon(Icons.arrow_back),
-                            label: Text('Page de connextion'),
+                            label: Text('Page de connexion'),
                           ),
                         ],
                       );

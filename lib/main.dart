@@ -55,14 +55,14 @@ class _MyEmailInputState extends State<MyEmailInput> {
                   left: 8.0, right: 8.0, top: 0.0, bottom: 20.0),
               child: TextFormField(
                 decoration: const InputDecoration(
-                  hintText: 'Entrer votre email',
+                  hintText: 'Entrez votre email',
                 ),
                 validator: (value) {
                   if (value.isEmpty) {
-                    return 'Ne pas rentrer de valeur vide';
+                    return 'Veuillez compléter le champ';
                   }
                   if (value.contains('@') == false) {
-                    return 'Metre un email valide';
+                    return 'Mettez un email valide';
                   }
                   return null;
                 },
@@ -74,12 +74,12 @@ class _MyEmailInputState extends State<MyEmailInput> {
                   const EdgeInsets.only(left: 8.0, right: 8.0, bottom: 60.0),
               child: TextFormField(
                 decoration: const InputDecoration(
-                  hintText: 'Entrer votre mot de passe',
+                  hintText: 'Entrez votre mot de passe',
                 ),
                 obscureText: true,
                 validator: (value) {
                   if (value.isEmpty) {
-                    return 'Ne pas rentrer de valeur vide';
+                    return 'Veuillez compléter le champ';
                   }
                   return null;
                 },
@@ -132,7 +132,7 @@ class _MyEmailInputState extends State<MyEmailInput> {
                                         )));
                           }
                         },
-                        child: Text('S\'inscrire'),
+                        child: Text('Inscription'),
                       ),
                     ),
                   ),
